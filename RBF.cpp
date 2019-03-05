@@ -7,6 +7,10 @@ RBF::RBF(int n_cent, double sig)
     sigma = sig;
 }
 
+/*  Handles data inps with standardisation,
+ *  sets RBF centers, calculates the interpolation
+ *  mtx and derives weights (stored within the class)
+ */
 void RBF::fit(char * xobs_path, char * yobs_path, int row, int col)
 {
     // load data
@@ -64,6 +68,11 @@ void RBF::set_interpol_matrix(arma::Mat <double> &interpol_mtx, arma::Mat <doubl
     }
 }
 
+/*  Calculates modelled outputs
+ *
+ *  xmod_path - path to file with inp vars
+ *  ymod_path - file created by the function
+ */
 void RBF::model(char * xmod_path, char * ymod_path, int row, int col)
 {
     // load data
@@ -89,7 +98,9 @@ void RBF::model(char * xmod_path, char * ymod_path, int row, int col)
 }
 
 
-
+/*  std::vector -> arma::mat conversion
+ *
+ */
 arma::mat vectomat(std::vector < std::vector <double> > &inp)
 {
     arma::mat A = arma::mat(inp.size(), inp[0].size());
@@ -102,6 +113,9 @@ arma::mat vectomat(std::vector < std::vector <double> > &inp)
 }
 
 
+/*  Data loading
+ *
+ */
 void RBF::load_data(std::vector < std::vector <double> > &INP, char * inp_path, int row, int col)
 {
     INP.resize(row);
@@ -128,7 +142,9 @@ void RBF::load_data(std::vector <double> &INP, char * inp_path, int row)
 }
 
 
-
+/*  Data preprocessing
+ *
+ */
 void RBF::stand(std::vector < std::vector <double> > & input, std::vector <double> & mean, std::vector <double> & stdev)
 {
     // MEAN
